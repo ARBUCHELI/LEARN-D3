@@ -1,0 +1,16 @@
+INTRODUCTION TO D3
+Why D3?
+The name d3 comes from the three D’s in the term “Data-Driven Documents.” This JavaScript data-visualization library rose in popularity because of a few game-changing features:
+
+d3 revolutionized the way data visualizations are built natively for the web by associating data with elements on a website’s Document Object Model.
+d3 is a visually elegant library that offers a wide range of pre-packaged visualizations (from Tree-models to Sankey funnels)
+d3 leaves a lot of room for creative customization because the elements the data are bound to can be styled like any regular DOM element
+d3 supports interactivity triggered by browser events
+In this lesson, we won’t be creating the fanciest d3 visualization you’ve ever seen. We’ll enter the world of d3 by taking our time to understand how data is bound to elements and how to customize the appearance of our elements based on this data.
+
+Instructions
+Observe the image on the right, this was created using D3.
+
+It was published as an interactive article in the NYTimes. Click the link to navigate to their page and see the interactivity for yourself!
+
+Try hovering over each movie director and their edges.
