@@ -1,4 +1,5 @@
-INTRODUCTION TO D3
+# INTRODUCTION TO D3
+--------------------
 Why D3?
 The name d3 comes from the three D’s in the term “Data-Driven Documents.” This JavaScript data-visualization library rose in popularity because of a few game-changing features:
 
