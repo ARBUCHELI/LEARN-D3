@@ -24,3 +24,127 @@ Try hovering over each movie director and their edges.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* Selection
+-----------
+D3 “injects” data visualizations onto a web page’s Document Object Model and associates data with a set of selected DOM elements. So before we go too far, let’s understand the first part 
+of the process- the selection.
+
+For D3 to inject or bind data to elements, a D3 selection of elements needs to be created. D3 selections are created with the .selectAll() or .select() methods.
+
+Both methods take one CSS3 selector string as their parameter. CSS3 selectors are strings include anything from an HTML element name such as h1 to a class prepended with a ., or an id 
+prepended with the # symbol.
+
+	. The .select() method returns the first element that matches a selector string.
+
+	. The .selectAll() returns an array-like structure with grouped nodes for all the elements that match the selector.
+
+Each element in the selection includes a reference to its parent node in the DOM.
+
+Take a look at the following examples:
+
+d3.select('#visualization');
+d3.selectAll('div');
+
+	. The .select() element only selects the first element that matches the selector, an element with an id of visualization.
+
+	. The .selectAll() element returns all of the elements that match the div selector in the DOM
+
+Note: To create a selection, the elements do NOT need to exist in the DOM. Say you want to visualize 500 rows of data and associate them with 500 circle elements. Those elements don’t 
+need to exist inside your web page in order for d3 to “theoretically” select them. Think of selecting theoretical elements as a “prepping your stage” step. You do this so that you can 
+eventually create those elements and bind data to each in the later steps. We will re-visit this concept in later exercises.
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Let’s selectAll()of the div elements and display some text. Notice there are three empty <div> elements inside index.html Copy and paste this code inside main.js:
+
+d3.selectAll('div')
+  .text('Select All'); 
+
+We will go over the text() method in later steps. For now, take a second to observe that there are now three divs inside the body. What do they display? Can you start inferring what these 
+two methods do?
+
+Checkpoint 2 Passed
+2.
+Now, instead of using selectAll(), let’s use .select(). Paste in the following snippet below the code inside main.js:
+
+d3.select('div')
+  .text('Select'); 
+
+What does the first div display and how is it unlike the rest? Notice how only the first div element has changed the text that displays.
+
+index.html
+----------
+<!DOCTYPE html> 
+<html> 
+  <head>
+    <link rel="stylesheet" href="style.css">
+		<script src="https://d3js.org/d3.v5.min.js">		</script>
+    <script src="main.js" defer></script>
+  </head>
+
+  <body>
+    <div id="one">
+    </div>
+    <div id="two">
+    </div>
+    <div id="three">
+    </div>
+	</body>
+  
+</html>
+
+main.js
+-------
+d3.selectAll('div')
+  .text('Select All'); 
+
+d3.select('div')
+  .text('Select'); 
+
+style.css
+---------
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
+body{
+   font-family: 'Raleway', sans-serif;
+   color: #5820df;
+}
+
+div {
+ padding-left: 10px;
+ color: #5820df;
+ background: #59eab7;
+ border: 4px solid #ee97ef;
+ font-size: .8em;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
