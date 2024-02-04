@@ -1,0 +1,322 @@
+# PROJECT
+---------
+
+* Climate Change Burden of Disease Visualization
+------------------------------------------------
+In this project, you’ll bind data to div elements and create a simple bar chart to display the climate change burden of disease by World Health Organization region. You will also create a 
+legend list that will highlight the corresponding bar when you hover over the corresponding legend item and vice versa. The data we will visualize is described as follows:
+
+“As part of a broader project to assess major risk factors to health, the burden of disease resulting from climate change was assessed. Measuring the health effects from climate change 
+can only be very approximate. Nevertheless, a assessment coordinated by WHO, taking into account only a subset of the possible health impacts, concluded that the modest climate change 
+that has occurred since the 1970s was already causing over 140 000 excess deaths annually by the year 2004.”  
+
+Find the raw data describing “climate change attributable deaths” and the different regions at the World Health Organization repository.
+
+Click to get started when you’re ready!
+
+* Tasks
+-------
+15/15 complete
+Mark the tasks as complete by checking them off
+
+* Create a bar chart
+--------------------
+1.
+Before we dive into the code, inspect the elements inside index.html. Pay close attention to the #viz and to the #legend elements. We’ve provided these elements so you can create a bar 
+chart inside #viz, and an ordered list inside #legend that will serve as a legend to explain the data behind the bars.
+
+
+Hint
+Navigate to index.html.
+
+2.
+Inside main.js, create a new variable named divSelection. Inside that variable, use d3 to select the parent element #viz and even though there are no div elements inside it at this point, 
+.selectAll() of the div elements. We will append these in later steps.
+
+
+Hint
+let someSelection = d3.select("parent")
+                      .selectAll("theoretical-element")
+
+3.
+Check out the climate_daly_data variable. It is an array of objects. Each datum has a region and a deaths property. We will be visualizing this data. Bind this data to the current 
+selection.
+
+
+Hint
+Feel free to continue on the chain you started from previous steps, but here’s the gist:
+
+selection.data(array);
+
+4.
+Let’s add the actual elements. Use the .enter() and .append() functions to append a set of div elements.
+
+
+Hint
+Chain the following methods:
+
+selection.data(array)
+         .enter()
+         .append("element")
+
+5.
+Inside our style.css file, we’ve created a class that will style the bars. Use the .attr() method in your current selection chain to assign a bar class to the elements in the selection.
+
+
+Hint
+selection.attr("attr-name","value")
+
+6.
+The class has been applied to all the elements in the selection, but it’s hard to see its effects because these div elements currently all look the same. Let’s use the data associated to
+each div in the selection to customize each. Assign a custom width with the .style() method. The value of the width should be a function of the .deaths datum property multiplied by the 
+number 8. Be sure to return the value as a string with the suffix 'px' to make it a pixel value. Click “Run” and admire your custom-made div elements!
+
+
+Hint
+selection.style("width", (d) => {return d.property * 10 + "px" })
+
+* Create legend
+---------------
+7.
+Great! We’ve made some different sized rectangle div elements. But it’s still really hard to tell what data corresponds to what div. Let’s make a legend in the form of an ol ordered list. 
+Since data gets assigned sequentially as it appears in the array, our ordered list will reflect the order of the div elements in the bar chart or #viz element.
+
+
+Hint
+Inspect the elements inside index.html.
+
+8.
+The process of creating this legend will be very similar to the process of creating our div elements. We will follow the selection, data, enter, and append pattern. Inside main.js, create 
+a new variable named listSelection. Inside that variable, use d3 to select the parent ol ordered list element #legend. Since we want to add li elements, use .selectAll() to select the 
+theoretical the li elements. We will append each of these elements in later steps.
+
+
+Hint
+let someSelection = d3.select("parent")
+                      .selectAll("theoretical-element")
+
+9.
+We will also be using the climate_daly_data variable to create these li elements. Bind this data to the current selection.
+
+
+Hint
+Feel free to continue on the chain you started from previous steps, but here’s the gist:
+
+selection.data(array);
+
+10.
+Let’s add the actual elements. Use the .enter() and .append() functions to append a set of li elements. d3 will take care of computing how many need to be added by looking at the current 
+state of the DOM.
+
+
+Hint
+Chain the following methods:
+
+selection.data(array)
+         .enter()
+         .append("element")
+
+11.
+Great! Our li elements have been created, but it’s hard to see they exist because they are all empty. Time to add the corresponding .text() to each element in the legend. Display 
+the .region of each datum separated by a : followed by the value of the .death count and the string deaths. For example, the content of the first item in the legend should look like:
+
+Low-and-middle-income countries of the African Region: 57 deaths
+
+Check out the new legend on the DOM! Let’s make it interactive.
+
+
+Hint
+selection.text( (d) => { return d.property + "some text"; });
+
+* Create interactivity
+----------------------
+12.
+In this last portion of the project, we will add CSS classes to our bars and our legends when a user hovers over them. This help the user see which bar data corresponds to each of the 
+WHO regions in the legend. Take a second to check out the toggleClass() function we provided inside main.js. The function takes two arguments:
+
+	. i is an integer represents the index of the element that the user is hovering over. Note that this way of accessing children starts counting at 1, not zero.
+
+	. toggle represents the boolean flag to apply the corresponding CSS class
+
+The toggle element allows us to remove the class styles after the user stops hovering over the elements.
+
+Inside our function, we select both the bar chart and the corresponding legend element with d3 by accessing the nth child of both the #legend and #viz elements and use the .classed() 
+method to remove and apply the styles to the corresponding elements. Read over the function so that you can use it on the next steps!
+
+
+Hint
+Read the toggleClass() function we have created inside main.js.
+
+13.
+Apply a mouseover event listener to the divSelection variable by using the .on() method. For your second argument, the event handler, create an anonymous function with two arguments d,i. 
+Inside the body of the function, invoke the toggleClass() function in the body of your anonymous function with two arguments:
+
+	. The i index incremented by one, since the toggleClass() function starts counting at one and the d3 indices start counting at zero.
+
+	. A boolean value of true since we want the styles to apply when a user hovers over these elements
+
+Save your code and start hovering over the div elements. What are you noticing is happening?
+
+
+Hint
+selection.on("event", eventHandler(d,i));
+
+14.
+We want to remove the classes when the user stops hovering over the element. Add a mouseout event listener with the .on() method that toggles the class back to false.
+
+For your second argument, the event handler, create an anonymous function with two arguments d,i. Inside the body of the function, invoke the toggleClass() function in the body of your 
+anonymous function with two arguments:
+
+	. The i index incremented by one, since the toggleClass() function starts counting at one and the d3 indices start counting at zero.
+
+	. A boolean value of false since we want the styles to be removed when a user stops hovering over these elements
+
+Hint
+selection.on("event", eventHandler(d,i));
+
+15.
+Repeat the same process for the listSelection variable. Add two event listeners, one for mouseover and one for mouseout.
+
+Hover over each element and see the classes be applied and remove as the user enters and leaves both the div elements and the li elements in the legend.
+
+
+Hint
+selection.on("event", eventHandler(d,i));
+
+main.js
+-------
+let climate_daly_data = [
+        {region: "Low-and-middle-income countries of the African Region", deaths: 57},
+        {region: "Low-and-middle-income countries of the Americas", deaths: 2},
+        {region: "Low-and-middle-income countries of the Eastern Mediterranean Region", deaths: 20},
+         {region: "Low-and-middle-income countries of the European Region", deaths: 0.67},
+         {region: "Low-and-middle-income countries of the South-East Asia Region", deaths: 58},
+        {region: "Low-and-middle-income countries of the Western Pacific Region", deaths: 4},
+        {region: "High income countries", deaths: 0.23}
+ ];
+
+
+let toggleClass = (i,toggle) => {
+   d3.select("#viz div:nth-child("+ i +")").classed("highlightBar",toggle);
+   d3.select("#legend li:nth-child("+ i +")").classed("highlightText",toggle);
+};
+
+let divSelection = d3.select("#viz")
+  .selectAll("div");
+
+divSelection
+  .data(climate_daly_data)
+  .enter()
+  .append("div")
+  
+  .attr("class", "bar")
+  .style("width", (d) => {
+    return d.deaths * 8 + "px"
+  })
+  .on("mouseover", function(d, i) {
+    toggleClass(i+1, true)  
+  })
+  .on("mouseout", function(d, i) {
+    toggleClass(i+1, false)  
+  });
+
+  let listSelection = d3.select("#legend")
+    .selectAll("li");
+
+  listSelection
+    .data(climate_daly_data)
+    .enter()
+    .append("li")
+     .text( (d) => { 
+       return d.region + ": " + d.deaths
+	  })
+    .on("mouseover", function(d, i) {
+      toggleClass(i, true)  
+    })
+     .on("mouseout", function(d, i) {
+      toggleClass(i, false)  
+    });
+
+index.html
+----------
+<!DOCTYPE html> 
+<html> 
+  <head>
+    <link rel="stylesheet" href="style.css">
+		<script src="https://d3js.org/d3.v5.min.js">		</script>
+    <script src="main.js" defer></script>
+  </head>
+
+  <body>
+    <h3>Climate change attributable deaths:</h3>
+    <div id="viz"></div>   
+    <ol id="legend"></ol>     
+	</body>
+  
+</html>
+
+style.css
+---------
+@import url('https://fonts.googleapis.com/css?family=Thasadith:400,700');
+
+body{
+  font-family: 'Thasadith', sans-serif;
+}
+
+h3 {
+  text-align: center;
+  color: #0769ad;
+}
+
+li{
+ cursor: pointer;
+}
+
+.bar {
+ background: #f5b634;
+ border: 4px solid #0769ad;
+ height: 20px;
+}
+
+.highlightText {
+ font-weight: 700;
+ color: #0769ad;
+}
+
+.highlightBar {
+  background-color: #0769ad;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
