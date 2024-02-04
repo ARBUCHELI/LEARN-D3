@@ -248,6 +248,442 @@ divSelection
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* The d Parameter
+-----------------
+So once we’ve associated the data with the elements, how do we access the data and start manipulating our elements based on those values? You’ll need a function with a d param to access 
+each datum associated per element. Think of the d as representing the d in data or datum. Remember that the steps that follow .data() method are executed the total number of elements in 
+the dataset.
+
+In the previous exercise, you pasted an anonymous function with a d parameter. This is because the d parameter represents the value bound to each element in the d3 chain. Say we wanted to 
+change the text inside a div to display the numbers in the array as text:
+
+let dataset = [55,34,23,22,59];
+
+let svg = d3.select("body")
+                 .selectAll("div")
+                 .data(dataset)
+                 .text(function(d) {
+                         return d;
+                  });
+
+	. In this example, the .text() method took an anonymous function with a d parameter that returns the data value inside each of the div elements. d3 will append that value as the 
+	text inside each of the five div elements it created from the dataset array. Note: If the data were of type object, it would append the entire object and we could access each of 
+	their properties accordingly.
+
+	. The .data() method assigns the correct value to the d parameter, or the first parameter, for the elements in question.
+
+	. The functions you use don’t always need to be anonymous, but you do need to include a d parameter, or a first argument, if you want to access the data. You can also optionally 
+	include an i parameter, or second parameter, if you want to access the index. Your JavaScript functions can be named and as complex as you wish, but for clarity’s sake, we used an 
+	anonymous one that simply returns the d value in this example. If we wanted to introduce more complicated logic like conditionals, a loop, or append other text, we could achieve 
+	this just like we would in the body of any other function.
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+The values inside of videoData array are objects. Use the .text() method and pass in an anonymous function that uses the d parameter to return the d.title and d.amount formatted as a 
+string like:
+
+d.title + ": " + d.amount + " views"
+
+Click Run and observe the output. Congrats! You were able to customize your data-driven elements based on data bound to them. We’ll keep building on this knowledge.
+
+
+Hint
+d3.select("body")
+   .selectAll("div")
+   .data(data)
+   .text("some string to display");
+
+index.html
+----------
+<!DOCTYPE html> 
+<html> 
+  <head>
+    <link rel="stylesheet" href="style.css">
+		<script src="https://d3js.org/d3.v5.min.js">		</script>
+    <script src="main.js" defer></script>
+  </head>
+
+  <body>
+    <h3>Most Streamed YouTube Videos in Billions:</h3>
+	</body>
+  
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>  
+</html>
+
+main.js
+-------
+let videoData = [{title: "Despacito", amount: 5.68},
+         {title: "Shape of You", amount: 3.89},
+         {title: "See You Again", amount: 3.85},
+         {title: "Uptown Funk", amount: 3.32},
+         {title: "Masha and the Bear: Recipe for Disaster", amount: 3.31},
+         {title: "Gangam Style", amount: 3.23},
+         {title: "Sorry", amount: 3.03},
+         {title: "Sugar", amount: 2.80},
+         {title: "Shake it Off", amount: 2.67},
+         {title: "Roar", amount: 2.65},
+         {title: "Bailando", amount: 2.63},
+         {title: "Thinking Out Loud", amount: 2.53},
+         {title: "Counting Stars", amount: 2.51},
+         {title: "Dark Horse", amount: 2.46},
+         {title: "Lean On", amount: 2.43}
+ ];
+
+let divSelection = d3.select("body") 
+  .selectAll("div");
+
+ divSelection
+  .data(videoData)
+  .text(function(d) {return d.title + ": " + d.amount + " views"}); 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Styling your data
+-------------------
+Now that you know how to access the datum associated with each element, it’s possible to start customizing the appearance of each element with two powerful methods: .attr() and .style().
+
+	. The .attr() method takes two parameters, the HTML attribute you wish to change and the value you wish to assign it.
+
+	. Similarly, the .style() method takes two parameters, the CSS property you wish to change and the value you wish to assign it.
+
+As we saw in the previous exercise, both of these methods can take their second argument as a function that returns the desired value for the property or attribute.
+
+Let’s take a look to build on the example we’ve seen throughout the lesson:
+
+let dataset = [55,34,23,22,59];
+
+let svg = d3.select("body")
+            .selectAll("div")
+            .data(dataset)
+            .attr("id", function(d,i){ return "element-" + i; })
+            .style("width", function(d){
+                   return d + "px";
+            });
+
+Focusing on the last four lines of the example above, observe that both .attr() and .style() levereged an anonymous function with the d parameter to set the values based on the element 
+data.
+
+	. The .attr() method changed the HTML attribute id to be based on the element index in the dataset
+
+	. The .style() method computed the width to be a function of the datum value
+
+You can style your elements according to the value of their data and change the styling based on different conditions.
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Use the .attr() method to assign a class of "bar" to all of the div elements in the d3 chain. All of the elements in this selection will now be styled with the same class. Click “Run” and 
+observe what styles applied.
+
+
+Hint
+ selection
+  .attr("class", "class-name");
+
+Checkpoint 2 Passed
+2.
+It’s great to apply a class for shared common styles, but what about the styles that depend on the value of the data of each element? Customize the width of each div by using the .style() 
+method. Use an anonymous function to compute the width in pixels to be:
+
+d.amount * 50 + "px"
+
+Click “Run” and observe the width of each div element reflect the number of views per YouTube video. That’s what we call data-driven styling!
+
+
+Hint
+ selection
+  .style("width", function(d) { return d + "px"; });
+
+
+index.html
+----------
+<!DOCTYPE html> 
+<html> 
+  <head>
+    <link rel="stylesheet" href="style.css">
+		<script src="https://d3js.org/d3.v5.min.js">		</script>
+    <script src="main.js" defer></script>
+  </head>
+
+  <body>
+    <h3>Most Streamed YouTube Videos in Billions:</h3>
+	</body>
+  
+  
+    
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div> 
+</html>
+
+main.js
+-------
+let videoData = [{title: "Despacito", amount: 5.68},
+         {title: "Shape of You", amount: 3.89},
+         {title: "See You Again", amount: 3.85},
+         {title: "Uptown Funk", amount: 3.32},
+         {title: "Masha and the Bear: Recipe for Disaster", amount: 3.31},
+         {title: "Gangam Style", amount: 3.23},
+         {title: "Sorry", amount: 3.03},
+         {title: "Sugar", amount: 2.80},
+         {title: "Shake it Off", amount: 2.67},
+         {title: "Roar", amount: 2.65},
+         {title: "Bailando", amount: 2.63},
+         {title: "Thinking Out Loud", amount: 2.53},
+         {title: "Counting Stars", amount: 2.51},
+         {title: "Dark Horse", amount: 2.46},
+         {title: "Lean On", amount: 2.43}
+ ];
+
+let divSelection = d3.select("body") 
+  .selectAll("div");
+
+divSelection
+  .data(videoData)
+  .text(function(d) { 
+     return d.title + ": " + d.amount + " views";
+	 })
+   .attr("class", "bar")
+   .style("width", function(d){
+      return d.amount * 50 + "px"
+   });
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Enter and Append
+------------------
+So far, our code has been associating data with existing elements inside our index.html file. What would happen if those elements weren’t already in there? We previously mentioned the 
+idea of “hypothetically” selecting elements so that we could prep them to bind data. How do we turn theoretical elements into real ones to visualize with data? With the .enter() and 
+.append() methods!
+
+But first, a quick refresher on the .data() method. The .data() method is invoked on a selection and takes a parameter of an array of any type. It returns an update selection with the 
+data bound to the elements. This update selection works as the object invoked on the next step:
+
+	. The .enter() method consolidates the difference between the number of existing elements in the selection and the number of elements in the dataset. It is invoked on the update 
+	selection that .data() returns. If there are more data points than existing “selected” elements, .enter() creates placeholder elements and returns an enter selection which 
+	specifies which elements need to be added. For example, if there were 0 existing elements in the update selection and 10 data points, enter would compute 10 elements in the enter 
+	selection. If there were 3, then it would compute 7 in the enter selection. The .enter() method does not actually append the elements, it just computes how many need to be added.
+
+	. Lastly the .append("element") method takes a string parameter with the element name you wish to append, it then analyzes the selection that gets handed off to it, and generates 
+	the specified elements on the DOM. It returns a reference to the elements it created.
+
+Note: If you ever want to analyze the data in the selection and log it to the console, you can always use the .nodes() method on your selection. This method will log the array of grouped 
+nodes in the selection.
+
+After making a selection, creating a new visualization, whose elements are not already in the DOM, usually follows the .data() .enter() and .append() pattern:
+
+let dataset = [55,34,23,22,59];
+d3.select("body")
+   .selectAll("div")
+   .data(dataset)
+   .enter()
+   .append("div");
+
+	. Everything after .data() will therefore get executed five times
+
+	. The .enter() method created five placeholder elements because there were no div elements in the DOM
+
+	. Five div’s were appended with the div elements
+	
+	. Those divs each have a _data_ property with the values of 55, 34, 2, 22, 59, respectively
+
+	. Each step of the chain returned a reference to those elements.
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Notice that in this exercise, there are no div elements inside index.html. We will be adding those elements with .enter() and .append().
+
+After the .data() method, add the two methods and pass in the string 'div' to the .append() method so that it may generate the div belonging to every datum in the dataset. Be sure to add 
+these steps in the chain right after .data() but before .text(). Take a second to note .enter() will compute the fifteen elements, and .append() will insert them.
+
+main.js
+-------
+let videoData = [{title: "Despacito", amount: 5.68},
+         {title: "Shape of You", amount: 3.89},
+         {title: "See You Again", amount: 3.85},
+         {title: "Uptown Funk", amount: 3.32},
+         {title: "Masha and the Bear: Recipe for Disaster", amount: 3.31},
+         {title: "Gangam Style", amount: 3.23},
+         {title: "Sorry", amount: 3.03},
+         {title: "Sugar", amount: 2.80},
+         {title: "Shake it Off", amount: 2.67},
+         {title: "Roar", amount: 2.65},
+         {title: "Bailando", amount: 2.63},
+         {title: "Thinking Out Loud", amount: 2.53},
+         {title: "Counting Stars", amount: 2.51},
+         {title: "Dark Horse", amount: 2.46},
+         {title: "Lean On", amount: 2.43}
+ ];
+
+let divSelection = d3.select("body") 
+  .selectAll("div");
+
+divSelection
+  .data(videoData)
+  .enter()
+  .append("div")
+  .text(function(d) { 
+     return d.title + ": " + d.amount + " views";
+	 })
+  .attr("class", "bar")
+  .style("width", function(d) { return 50 * d.amount + "px"; });
+
+index.html
+----------
+<!DOCTYPE html> 
+<html> 
+  <head>
+    <link rel="stylesheet" href="style.css">
+		<script src="https://d3js.org/d3.v5.min.js">		</script>
+    <script src="main.js" defer></script>
+  </head>
+
+  <body>
+    <h3>Most Streamed YouTube Videos in Billions:</h3>
+	</body>
+</html>
+
+style.css
+---------
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
+body{
+   font-family: 'Raleway', sans-serif;
+   color: #5820df;
+}
+
+h3 {
+  text-align: center;
+}
+
+div {
+ padding-left: 10px;
+ color: #5820df;
+ background: #59eab7;
+ border: 4px solid #ee97ef;
+ font-size: .8em;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
