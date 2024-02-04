@@ -691,6 +691,137 @@ let divSelection = d3.select("body")
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* Interactivity with events
+---------------------------
+You’ve learned the basic d3 design pattern of:
+
+	. Creating a selection
+
+	. Associating data with that selection
+	
+	. Appending elements to the DOM
+
+	. Modifying the elements based on the data
+
+Let’s take a second to put it all together, and build some interactivity on top. After all, another powerful aspect of d3 is that it has access to DOM events.
+
+The .on() method takes a string parameter with the name of the event and a function to handle that event when it is triggered. The .on() method binds an event listener to the elements in 
+the selection. Take a look at the following example:
+
+selection
+    .on("mouseover", function(d,i) {
+          d3.select(this).text(d);
+    });
+
+In the code above, each element in the selection would have an event listener that binds text to the elements when they event is triggered on each element individually. Notice that in the 
+body of the function, we use the this keyword. In the function’s context, this refers to the event’s DOM element. The code modifies the text on mouse over, by selecting it with d3 and 
+appending new text.
+
+You can pass different types of events, some of the most popular events include "click", "mouseover", "mouseout", "mouseenter" and more.
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Let’s put all of our knowledge together:
+
+	. Create a selection variable that creates a selection by first selecting the #viz element and then selecting all p elements.
+
+	. Bind the poemVerses array to it as the .data()
+	
+	. Since there are no paragraphs inside the #viz element in our index.html we need to create them, use .enter() and .append() to calculate the number of elements that need to be 
+	added to selection and to add the p elements. Add a simple string of .text() to each element that says “Click Me!”. We’ll make this part interactive in the next step.
+
+Hint
+selection
+  .data(dataset)
+  .enter()
+  .append("element")
+  .text("some simple text to display")
+
+Checkpoint 2 Passed
+2.
+You’ve mastered the pattern of creating a selection, binding data, and appending elements. Let’s use the .on() method to add an event listener that gets triggered on "click" for each of 
+those elements:
+
+	. Pass in the string "click" as your first parameter.
+
+	. The second parameter should be an event handler function. Inside the event handler function you create, use d3.select() to grab the element the event is triggered on by using 
+	the keyword this. Chain this selection to assign the element a .text() that corresponds to datum value for each element.
+
+Press save and click on each element!
+
+
+Hint
+selection
+  .data(dataset)
+  .enter()
+  .append("element")
+  .text("some simple text to display")
+  .on("mouseover", function(d, i) {d3.select(this).text(d); });
+
+index.html
+----------
+<!DOCTYPE html> 
+<html> 
+  <head>
+    <link rel="stylesheet" href="style.css">
+		<script src="https://d3js.org/d3.v5.min.js">		</script>
+    <script src="main.js" defer></script>
+  </head>
+
+  <body>
+    <h3>Love, Maybe by Audre Lorde</h3>
+    <div id="viz"></div>     
+	</body>
+  
+</html>
+
+main.js
+-------
+let poemVerses = ["Always","in the middle", "of our bloodiest battles", "you lay down your arms","like flowering mines","to conquer me home."];
+
+let selection = d3.select("#viz") 
+    .selectAll("p");
+
+selection
+  .data(poemVerses)
+  .enter()
+  .append("p")
+  .text("Click Me!")
+  .on("click", function(d,i) {
+          d3.select(this).text(d);
+    });
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
